@@ -45,7 +45,8 @@ SOURCES += \
     source/engine/lglobject.cpp \
     source/scene1.cpp \
     source/abstractscene.cpp \
-    source/uniform.cpp
+    source/uniform.cpp \
+    source/engine/lphysics.cpp
  #   source/math/vmath.cpp
 
 # Default rules for deployment.
@@ -61,5 +62,6 @@ HEADERS += \
     source/engine/lglobject.h \
     source/Scene1.h \
     source/abstractscene.h \
-    source/uniform.h
+    source/uniform.h \
+    source/engine/lphysics.h
 

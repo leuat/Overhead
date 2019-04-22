@@ -25,6 +25,7 @@ public:
     void gen_waveforms(void);
     void InitMusic();
     void Play();
+    void Terminate();
 
 };
 

@@ -5,7 +5,7 @@ LGLWrap::LGLWrap(LXM* lxm)
     m_lxm = lxm;
 }
 
-int LGLWrap::Init()
+int LGLWrap::Init(int w, int h)
 {
     if( !glfwInit() )
     {
@@ -22,7 +22,7 @@ int LGLWrap::Init()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
-    m_window = glfwCreateWindow( 1024, 768, "Tutorial 02 - Red triangle", NULL, NULL);
+    m_window = glfwCreateWindow( w, h, "", NULL, NULL);
 #ifdef IS_DEBUG
     if( m_window == NULL ){
     //    fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
@@ -58,17 +58,18 @@ int LGLWrap::Exec()
     m_currentScene->Init();
     int m_curSceneIdx = 0;
     bool done = false;
+    m_lxm->Play();
     m_timer = 0;
     do{
         glClear( GL_COLOR_BUFFER_BIT );
 
+        m_lxm->Play();
         m_currentScene->Update();
 
 
         glfwSwapBuffers(m_window);
         glfwPollEvents();
 
-        m_lxm->Play();
 
         if (m_timer>m_currentScene->m_timerEnd) {
             m_curSceneIdx++;
@@ -89,6 +90,7 @@ int LGLWrap::Exec()
     // Cleanup VBO
 
     // Close OpenGL window and terminate GLFW
-    glfwTerminate();
 
+    glfwTerminate();
+    m_lxm->Terminate();
 }

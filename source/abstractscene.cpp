@@ -20,6 +20,7 @@ void AbstractScene::RegisterStandards(LGLObject* p1)
     m_uniforms.push_back(new Uniform(p1->m_programID,"target", Uniform::tVec3));
 
     m_uniforms.push_back(new Uniform(p1->m_programID,"invVP", Uniform::tMat4));
+    m_uniforms.push_back(new Uniform(p1->m_programID,"time", Uniform::tScalar));
 //    m_uniforms.push_back(new Uniform(p1->m_programID,"projMat", Uniform::tMat4));
   //  m_uniforms.push_back(new Uniform(p1->m_programID,"viewMat", Uniform::tMat4));
 
@@ -32,5 +33,6 @@ void AbstractScene::Update() {
 
     for (auto u: m_uniforms)
         u->SetUniform();
+
 
 }

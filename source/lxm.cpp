@@ -65,4 +65,9 @@ void LXM::Play()
 
 }
 
+void LXM::Terminate()
+{
+
+}
+
 

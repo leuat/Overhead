@@ -14,6 +14,7 @@ public:
     glm::mat4x4 m_projMat;
     glm::mat4x4 m_viewMat;
     glm::vec3 m_camera, m_target;
+    float m_time = 0;
 
     AbstractScene(int timer);
     ~AbstractScene();

@@ -27,12 +27,20 @@ public:
         GetUniform(prog, name, t);
         m_name = name;
     }
+    Uniform(GLuint prog, string name, int size) {
+        GetUniform(prog, name, tScalar);
+        m_name = name;
+        m_arrSize = size;
+        m_arr = new float[size];
+    }
     string m_name;
     UType m_type;
     glm::mat4 m_mat4;
     glm::mat3 m_mat3;
     glm::vec3 m_vec3;
     GLfloat m_fval;
+    GLfloat* m_arr;
+    int m_arrSize = 1;
     GLuint m_id;
     void GetUniform(GLuint program, string name, UType t) {
         m_id = glGetUniformLocation(program, name.c_str());
@@ -40,8 +48,14 @@ public:
     }
     void SetUniform() {
         if (m_type==tVec3) glUniform3f(m_id, m_vec3.x,m_vec3.y,m_vec3.z);
-        if (m_type==tScalar) glUniform1f(m_id, m_fval);
-        if (m_type==tMat4) {
+        if (m_type==tScalar) {
+            if (m_arrSize==1)
+            glUniform1f(m_id, m_fval);
+            else
+                glUniform1fv(m_id, m_arrSize, m_arr);
+
+         }
+                if (m_type==tMat4) {
             glUniformMatrix4fv(m_id, 1, GL_FALSE, &m_mat4[0][0]);
          //   printf(": %s, %d\n", m_name.c_str(), m_id);
         }

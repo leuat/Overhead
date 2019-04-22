@@ -11,7 +11,7 @@ out vec2 UV;
 // Values that stay constant for the whole mesh.
 uniform mat4 MVP;
 
-out vec3 pos;
+out vec3 vpos;
 
 void main(){
 
@@ -20,7 +20,7 @@ void main(){
         gl_Position.xyz = vertexPosition_modelspace;
         gl_Position.w = 1;
 
-        pos = vertexPosition_modelspace;
+        vpos = vertexPosition_modelspace;
 
         // UV of the vertex. No special space for this one.
         UV = vertexUV;
