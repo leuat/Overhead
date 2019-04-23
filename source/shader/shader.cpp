@@ -14,7 +14,7 @@ using namespace std;
 
 #include "source/shader/shader.h"
 
-GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path){
+GLuint LoadShaders(vector<string> includes, const char * vertex_file_path,const char * fragment_file_path){
 
 	// Create the shaders
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -35,17 +35,22 @@ GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path
 	}
 
 	// Read the Fragment Shader code from the file
-	std::string FragmentShaderCode;
-	std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
-	if(FragmentShaderStream.is_open()){
-		std::stringstream sstr;
-		sstr << FragmentShaderStream.rdbuf();
-		FragmentShaderCode = sstr.str();
-		FragmentShaderStream.close();
-	}
 
-	GLint Result = GL_FALSE;
+    includes.push_back(fragment_file_path);
+
+    std::stringstream sstr;
+    std::string FragmentShaderCode;
+    for (string s: includes) {
+        std::ifstream FragmentShaderStream(s, std::ios::in);
+        if(FragmentShaderStream.is_open()){
+            sstr << FragmentShaderStream.rdbuf();
+            FragmentShaderStream.close();
+        }
+    }
+    GLint Result = GL_FALSE;
 	int InfoLogLength;
+
+    FragmentShaderCode = sstr.str();
 
 
 	// Compile Vertex Shader

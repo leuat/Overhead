@@ -27,6 +27,18 @@ public:
     void Play();
     void Terminate();
 
+    float GetFrequency(int channel) {
+        return xm_get_frequency_of_channel(ctx,channel);
+    }
+
+    float GetVolume(int channel) {
+        return xm_get_volume_of_channel(ctx,channel);
+    }
+
+    float GetInstrument(int channel) {
+        return xm_get_instrument_of_channel(ctx, channel);
+    }
+
 };
 
 #endif // LXM_H

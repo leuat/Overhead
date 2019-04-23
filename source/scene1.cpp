@@ -6,7 +6,9 @@ void Scene1::Init()
 {
    LGLObject* p1 = new LGLObject();
    p1->GenerateGenericPlane();
-   p1->Init("../resources/shaders/scene1.vert","../resources/shaders/scene1.frag");
+   vector<string> includes;
+   includes.push_back("../resources/shaders/raymarcherinc.frag");
+   p1->Init("../resources/shaders/scene1.vert","../resources/shaders/scene1.frag", includes);
    m_objects.push_back(p1);
 
 
@@ -24,9 +26,9 @@ void Scene1::Init()
 
 }
 
-void Scene1::Update()
+void Scene1::Update(LXM& xm)
 {
-    AbstractScene::Update();
+    AbstractScene::Update(xm);
 
     m_uniforms[0]->m_vec3 = m_camera;
     m_uniforms[1]->m_vec3 = m_target;
@@ -46,12 +48,14 @@ void Scene1::Update()
 //    m_uniforms[2]->m_mat4 = m_projMat;
   //  m_uniforms[3]->m_mat4 = m_viewMat;
 
-    float c = m_time/10.0;
+    float c = m_time/10.0 ;
+//    float beat =xm.GetVolume(6) + xm.GetVolume(7) + xm.GetVolume(9);
+    float beat =xm.GetInstrument(9)*xm.GetVolume(9) + xm.GetFrequency(2)*0.5;
     for (auto v: m_physics.m_objects) {
         v->radius = (2+cos(c))*0.25;
         c = c+624.346;
         v->radius = 0.2;
-        v->c1 = c;
+        v->c1 = beat*10.0;
     }
 
     m_uniforms[2]->m_mat4 = glm::inverse(m_projMat*m_viewMat);

@@ -8,11 +8,11 @@ class Scene1 : public AbstractScene
 {
 
 public:
-    int m_noSpheres = 64;
+    int m_noSpheres = 4;
     LPhysics m_physics;
     Scene1(int t) : AbstractScene(t) {}
     void Init() override;
-    void Update() override;
+    void Update(LXM& xm) override;
 };
 
 #endif // SCENE1_H

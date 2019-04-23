@@ -6,7 +6,7 @@ using namespace std;
 
 #include <source/engine/lglobject.h>
 #include <source/uniform.h>
-
+#include <source/lxm.h>
 class AbstractScene
 {
 public:
@@ -26,7 +26,7 @@ public:
     void RegisterStandards(LGLObject* p1);
 
     virtual void Init() {}
-    virtual void Update();
+    virtual void Update(LXM& xm);
     virtual void Cleanup() {}
 };
 

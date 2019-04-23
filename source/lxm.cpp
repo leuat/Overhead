@@ -62,8 +62,8 @@ void LXM::Play()
 {
    xm_generate_samples(ctx, buffer, 2048);
    snd_pcm_writei(device, buffer, 2048);
-
 }
+
 
 void LXM::Terminate()
 {

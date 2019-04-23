@@ -10,7 +10,7 @@ int main( void )
     xm.InitMusic();
     LGLWrap app(&xm);
     app.m_scenes.push_back(new Scene1(2000));
-    app.Init(600,400);
+    app.Init(800,600);
 
     return app.Exec();
 }

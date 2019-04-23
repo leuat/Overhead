@@ -64,7 +64,7 @@ int LGLWrap::Exec()
         glClear( GL_COLOR_BUFFER_BIT );
 
         m_lxm->Play();
-        m_currentScene->Update();
+        m_currentScene->Update(*m_lxm);
 
 
         glfwSwapBuffers(m_window);

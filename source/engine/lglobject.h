@@ -28,7 +28,7 @@ public:
 public:
     LGLObject();
     ~LGLObject()  { Destroy();}
-    void Init(string vert, string frag );
+    void Init(string vert, string frag,vector<string> frag_includes );
     void GenerateGenericPlane();
     void EnableArray(int i, GLuint buf, int attr, int size);
     GLuint CreateBuffer(vector<GLfloat>& data);

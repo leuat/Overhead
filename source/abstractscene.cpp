@@ -27,7 +27,7 @@ void AbstractScene::RegisterStandards(LGLObject* p1)
 }
 
 
-void AbstractScene::Update() {
+void AbstractScene::Update(LXM& xm) {
     for (auto v : m_objects)
         v->Render();
 

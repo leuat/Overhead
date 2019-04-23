@@ -7,11 +7,11 @@ LGLObject::LGLObject()
 
 }
 
-void LGLObject::Init(string vert, string frag)
+void LGLObject::Init(string vert, string frag, vector<string> frag_includes)
 {
 
     // Create and compile our GLSL program from the shaders
-    m_programID = LoadShaders( vert.c_str(), frag.c_str() );
+    m_programID = LoadShaders( frag_includes, vert.c_str(), frag.c_str() );
 
     glGenVertexArrays(1, &m_vertexArrayID);
     glBindVertexArray(m_vertexArrayID);
