@@ -12,9 +12,9 @@ public:
     int m_noSpheres = 4;
     LPhysics m_physics;
     Scene1(int t, int w, int h) : AbstractScene(t,w,h) {}
-    void Init() override;
-    void Update(LXM& xm) override;
-    void Cleanup() override {}
+    void InitScene() override;
+    void UpdateScene(LXM& xm) override;
+    void CleanupScene() override {}
 };
 
 #endif // SCENE1_H

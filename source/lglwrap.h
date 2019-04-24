@@ -3,6 +3,8 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 // Include GLEW
+#define GLEW_STATIC
+
 #include <GL/glew.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +14,6 @@
 #include <GLFW/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/norm.hpp>
-// Include GLM
 #include <glm/glm.hpp>
 #include <algorithm>
 using namespace glm;
@@ -41,9 +42,11 @@ public:
     LGLWrap(LXM* lxm);
 
     int Init(int w, int h);
-    void Update() {}
+    void Update();
 
     int Exec();
 };
+
+
 
 #endif // LGLWRAP_H

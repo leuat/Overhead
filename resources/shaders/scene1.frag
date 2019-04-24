@@ -16,8 +16,10 @@ vec2 map( in vec3 pos )
                  spherePos[5*i+1]*0.0+0.2,
                  spherePos[5*i+2])*0.1;
          float c= cos(time/25.0)+2;
+//         c = 1.1;
          p = modfunc(p,vec3(c,4,c));
 //         p = modfunc(p,vec3(2.5,5,2.5));
+
 
          if (j>=0)
             res = opU( res, vec2( sdBox(    p, 0.5*vec3(1,1,1)),spherePos[5*i+3]));
@@ -47,13 +49,13 @@ void main(){
         float s2 = s*2;
 
         //ro = vec3(sin(UV.x*s2)*cos(UV.y*s),sin(UV.x*s2)*sin(UV.y*s), cos(UV.y*s*s2));
-        mat3 ca = setCamera( ro, target, time/100.0 );
+        mat3 ca = setCamera( ro, target, time/1000.0 );
 
 //        vec2 o = vec2(float(m),float(n)) / float(AA) - 0.5;
 //        vec2 p = (-iResolution.xy + 2.0*(fragCoord+o))/iResolution.y;
 //#else
  //       vec2 p = iResolution2.0*(UV)*1;
-        float th = cos(time/50.0)*2+1;
+        float th = cos(time/100.0)*2+1;
         mat2x2 rmat = mat2x2(cos(th),-sin(th),sin(th),cos(th));
         vec2 p2 = rmat*UV;
 
@@ -72,7 +74,7 @@ void main(){
 //#endif
 
         // ray direction
-        p = UV;
+        p = UV*2;
         float amp = 0.2*sin(time*0.05)*0;
 //        rd = (ca * normalize( vec3(p.xy,2.0) ) + amp*cos(p.x+time*0.1)*vec3(0,1,0));;
 //        rd = (ca * normalize( vec3(p.xy,2.0) ));
@@ -96,12 +98,12 @@ void main(){
             // material
             col = 0.45 + 0.35*sin( vec3(0.05,0.08,0.10)*(m-1.0) );
 
-            if( m<1.5 )
+/*            if( m<1.5 )
             {
                 float f = checkersGradBox( 2.0*pos.xz );
                 col = 0.3 + f*vec3(0.1);
             }
-
+*/
             // lighting
             float occ = calcAO( pos, nor );
             vec3  lig = normalize( vec3(-0.4, 0.7, -0.6) );

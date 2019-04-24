@@ -42,7 +42,7 @@ win32-msvc*{
 #    QMAKE_CXXFLAGS +=  -Os  -fno-stack-protector  -ffunction-sections -fdata-sections   -fno-unwind-tables -fno-asynchronous-unwind-tables -fno-math-errno  -fmerge-all-constants
 #    QMAKE_CXXFLAGS += -fno-ident  -fsingle-precision-constant  -ffast-math
 #    QMAKE_CXXFLAGS += -s -Wl,-verbose -Wl,-Bstatic
-    LIBS += -L$$PWD/libs/glew-2.1.0/ -L$$PWD/libs/glfw-3.3.bin.WIN64/ -lGLEW32 -lGLU32 -lopengl32 -lglfw3
+    LIBS += -L$$PWD/libs/glew-2.1.0/ -L$$PWD/libs/glfw-3.3.bin.WIN64/ -lOpenGL32  -lGLU32 -lglew32ss  -lglfw3   -lopengl32
     LIBS += -lgdi32 -lshell32 -lvcruntime -lmsvcrt -lUser32
 
     LIBS += -L$$PWD/libs/libxm/src/Release -lxms

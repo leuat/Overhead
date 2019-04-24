@@ -2,8 +2,7 @@
 
 AbstractScene::AbstractScene(int timer, int w, int h)
 {
-    m_timerEnd = timer;
-    m_width = w;
+    m_timerEnd = timer;    m_width = w;
     m_height = h;
 
 }
@@ -14,6 +13,7 @@ AbstractScene::~AbstractScene() {
 
     for (auto v: m_uniforms)
         delete v;
+
 }
 
 void AbstractScene::RegisterStandards(LGLObject* p1)
@@ -72,18 +72,18 @@ void AbstractScene::SetupFrameBuffer()
 
 
 
-void AbstractScene::Init()
+void AbstractScene::InitScene()
 {
     SetupFrameBuffer();
 
 }
 
 
-void AbstractScene::Update(LXM& xm) {
+void AbstractScene::UpdateScene(LXM& xm) {
     if (m_useFrameBuffer)
         glBindFramebuffer(GL_FRAMEBUFFER, m_targetFramebufferName);
 
-    for (auto v : m_objects)
+     for (auto v : m_objects)
         v->Render();
 
     for (auto u: m_uniforms)
@@ -97,4 +97,4 @@ void AbstractScene::Update(LXM& xm) {
 
 }
 
-void AbstractScene::Cleanup() {}
+void AbstractScene::CleanupScene() {}

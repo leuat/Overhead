@@ -14,17 +14,17 @@ int LGLWrap::Init(int w, int h)
         return -1;
 //        return -1;
     }
-
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+    glfwWindowHint(GLFW_OPENGL_ANY_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     // Open a window and create its OpenGL context
     m_window = glfwCreateWindow( w, h, "", NULL, NULL);
 #ifdef IS_DEBUG
     if( m_window == NULL ){
+        printf("Failed to create GLFW window\n");
     //    fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
       //  getchar();
         glfwTerminate();
@@ -46,7 +46,7 @@ int LGLWrap::Init(int w, int h)
     glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_TRUE);
 
     // Dark blue background
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 }
 
@@ -55,36 +55,36 @@ int LGLWrap::Init(int w, int h)
 int LGLWrap::Exec()
 {
     if (m_scenes.size()!=0) {
-    m_currentScene = m_scenes[0];
-    m_currentScene->Init();}
-    int m_curSceneIdx = 0;
+        m_currentScene = m_scenes[0];
+     m_currentScene->InitScene();}
+     int m_curSceneIdx = 0;
     bool done = false;
     m_lxm->Play();
     m_timer = 0;
     do{
         glClear( GL_COLOR_BUFFER_BIT );
 
-        m_lxm->Play();
+//        m_lxm->Play();
 
-
-        glfwSwapBuffers(m_window);
-        glfwPollEvents();
 
         if (m_currentScene!=nullptr) {
-        m_currentScene->Update(*m_lxm);
+        m_currentScene->UpdateScene(*m_lxm);
 
         if (m_timer>m_currentScene->m_timerEnd) {
             m_curSceneIdx++;
             if (m_curSceneIdx>=m_scenes.size())
                 done = true;
             else {
-                m_currentScene->Cleanup();
+                m_currentScene->CleanupScene();
                 m_currentScene = m_scenes[m_curSceneIdx];
-                m_currentScene->Init();
+                m_currentScene->InitScene();
 
             }
         }
         }
+        glfwSwapBuffers(m_window);
+        glfwPollEvents();
+
         m_timer++;
 
     } // Check if the ESC key was pressed or the window was closed

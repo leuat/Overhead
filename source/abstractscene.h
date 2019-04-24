@@ -1,12 +1,13 @@
 #ifndef ABSTRACTSCENE_H
 #define ABSTRACTSCENE_H
 
-#include <vector>
 using namespace std;
+#include <vector>
 
 #include <source/engine/lglobject.h>
 #include <source/uniform.h>
 #include <source/lxm.h>
+
 class AbstractScene
 {
 public:
@@ -14,6 +15,7 @@ public:
     glm::mat4x4 m_projMat;
     glm::mat4x4 m_viewMat;
     glm::vec3 m_camera, m_target;
+
     float m_time = 0;
     bool m_useFrameBuffer = false;
     GLuint m_targetFramebufferName = 0;
@@ -34,9 +36,9 @@ public:
 
     void SetupFrameBuffer();
 
-    virtual void Init();
-    virtual void Update(LXM& xm);
-    virtual void Cleanup();
+    virtual void InitScene();
+    virtual void UpdateScene(LXM& xm);
+    virtual void CleanupScene();
 };
 
 #endif // ABSTRACTSCENE_H

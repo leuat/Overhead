@@ -9,11 +9,11 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
+#include <source/shader/shader.h>
 
 using namespace glm;
 using namespace std;
 
-#include <source/shader/shader.h>
 
 class LGLObject
 {

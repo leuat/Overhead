@@ -2,7 +2,7 @@
 #include <source/lxm.h>
 
 #include <source/Scene1.h>
-
+#define GLEW_STATIC
 
 
 
@@ -14,11 +14,7 @@ int main( void )
     LGLWrap app(&xm);
     int w = 800;
     int h= 600;
-    printf("HERE\n");
-    AbstractScene* s = new Scene1(2000,w,h);
-    printf("HERE2\n");
-   // app.m_scenes.push_back(s);
-    app.Init(800,600);
-    //return app.Exec();
-   return 0;
+     app.m_scenes.push_back(new Scene1(2000,w,h));
+    app.Init(1024,768);
+    return app.Exec();
 }

@@ -50,9 +50,9 @@ precision mediump float;
 
 uniform vec2 TextureSize;
 #if defined(CURVATURE)
-varying vec2 screenScale;
+uniform vec2 screenScale;
 #endif
-varying vec2 TEX0;
+uniform vec2 TEX0;
 float filterWidth = 0.5;
 
 float CalcScanLineWeight(float dist)
@@ -90,6 +90,8 @@ vec2 Distort(vec2 coord)
 void main()
 {
     float N = 320;
+
+
     vec2 PUV = floor(UV*N)/N;
 
     vec2 pr = Distort(PUV)*0.88;
@@ -100,19 +102,27 @@ void main()
     color.y = texture( renderedTexture, pg*0.5 + vec2(0.5,0.5) ).y;
     color.z = texture( renderedTexture, pb*0.5 + vec2(0.5,0.5) ).z;
 
-    float amp = 0.5;
+
+
+    float amp = 1;
     float s = 600;
-    color.x *=(1 + amp*sin(pr.y*s));
-    color.r *=(1 + amp*sin(pg.y*s));
-    color.z *=(1 + amp*sin(pb.y*s));
+    color.r *=1*(1 + amp*sin(pr.y*s));
+    color.g *=1*(1 + amp*sin(pg.y*s));
+    color.b *=1*(1 + amp*sin(pb.y*s));
 
     if (pr.x>1 || pr.x<-1 || pr.y>1 || pr.y<-1) { color.r = 0;}
     if (pg.x>1 || pg.x<-1 || pg.y>1 || pg.y<-1) { color.g = 0;}
     if (pb.x>1 || pb.x<-1 || pb.y>1 || pb.y<-1) { color.b = 0;}
+
+    color *= vec3(1,0.8,0.1);
+
+//    color  = pow(color,8);
 
 //    color.b *= 0.2;
 //    color.r *= 0.2;
 
 //    color.r = 0;
 
+
+//    color = texture( renderedTexture, p*0.5 + vec2(0.5,0.5) ).xyz;
 }

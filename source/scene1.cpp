@@ -2,9 +2,10 @@
 
 
 
-void Scene1::Init()
+void Scene1::InitScene()
 {
-    AbstractScene::Init();
+    AbstractScene::InitScene();
+
    LGLObject* p1 = new LGLObject();
    p1->GenerateGenericPlane();
    vector<string> includes;
@@ -18,14 +19,14 @@ void Scene1::Init()
     m_physics.InitRandom(m_noSpheres,vec3(r,r,r),vec3(r/2,0,r/2));
     m_uniforms.push_back(new Uniform(p1->m_programID,"spherePos",m_noSpheres*5));
 
-//   m_projMat = getProjectionMatrix();
+   //m_projMat = getProjectionMatrix();
   // m_viewMat = getViewMatrix();
 
 }
 
-void Scene1::Update(LXM& xm)
+void Scene1::UpdateScene(LXM& xm)
 {
-    AbstractScene::Update(xm);
+    AbstractScene::UpdateScene(xm);
 
     m_uniforms[0]->m_vec3 = m_camera;
     m_uniforms[1]->m_vec3 = m_target;
