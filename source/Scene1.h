@@ -10,7 +10,7 @@ class Scene1 : public AbstractScene
 public:
     int m_noSpheres = 4;
     LPhysics m_physics;
-    Scene1(int t) : AbstractScene(t) {}
+    Scene1(int t, int w, int h) : AbstractScene(t,w,h) {}
     void Init() override;
     void Update(LXM& xm) override;
 };

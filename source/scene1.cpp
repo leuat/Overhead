@@ -4,6 +4,7 @@
 
 void Scene1::Init()
 {
+    AbstractScene::Init();
    LGLObject* p1 = new LGLObject();
    p1->GenerateGenericPlane();
    vector<string> includes;
@@ -65,7 +66,7 @@ void Scene1::Update(LXM& xm)
 
     r = 15;
     m_physics.Gravity2();
-    m_physics.ConstrainBox(vec3(0,r/2,0), vec3(r,r,r));
+//    m_physics.ConstrainBox(vec3(0,r/2,0), vec3(r,r,r));
 
     m_physics.Move(0.01);
             m_physics.ToArray(m_uniforms[4]->m_arr);

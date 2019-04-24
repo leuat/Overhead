@@ -15,17 +15,25 @@ public:
     glm::mat4x4 m_viewMat;
     glm::vec3 m_camera, m_target;
     float m_time = 0;
-
-    AbstractScene(int timer);
+    bool m_useFrameBuffer = false;
+    GLuint m_targetFramebufferName = 0;
+    GLuint m_renderedTexture;
+    int m_width, m_height;
+    AbstractScene(int timer, int w, int h);
     ~AbstractScene();
     vector<LGLObject*> m_objects;
     vector<Uniform*> m_uniforms;
+
+    LGLObject* m_targetObject;
+
 
     int m_timerEnd;
 
     void RegisterStandards(LGLObject* p1);
 
-    virtual void Init() {}
+    void SetupFrameBuffer();
+
+    virtual void Init();
     virtual void Update(LXM& xm);
     virtual void Cleanup() {}
 };
