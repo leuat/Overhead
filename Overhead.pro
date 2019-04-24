@@ -36,14 +36,21 @@ INCLUDEPATH +=$$PWD/../libxm/include/
 
 }
 win32-msvc*{
-    QMAKE_CXXFLAGS += -openmp
-     LIBS += -fopenmp
+#    QMAKE_CXXFLAGS += -openmp
+#     LIBS += -fopenmp
 #    QMAKE_CXXFLAGS +=  -Ofast
 #    QMAKE_CXXFLAGS +=  -Os  -fno-stack-protector  -ffunction-sections -fdata-sections   -fno-unwind-tables -fno-asynchronous-unwind-tables -fno-math-errno  -fmerge-all-constants
 #    QMAKE_CXXFLAGS += -fno-ident  -fsingle-precision-constant  -ffast-math
 #    QMAKE_CXXFLAGS += -s -Wl,-verbose -Wl,-Bstatic
-    LIBS += -L$$PWD/libs/glew-2.1.0/ -L$$PWD/libs/glfw-3.3.bin.WIN64/ -lOpenGL32  -lGLU32 -lglew32ss  -lglfw3   -lopengl32
-    LIBS += -lgdi32 -lshell32 -lvcruntime -lmsvcrt -lUser32
+    QMAKE_CXXFLAGS += -O1  -fno-stack-protector  -ffunction-sections -fdata-sections
+    LIBS += -L$$PWD/libs/glew-2.1.0/ -L$$PWD/libs/glfw-3.3.bin.WIN64/ -lOpenGL32  -lGLU32 -lglew32ss  -lglfw3
+ #   LIBS += -lgdi32 -lshell32 -lvcruntime -lmsvcrt -lUser32
+    LIBS +=  -lUser32 -lgdi32 -lshell32
+
+   QMAKE_CXXFLAGS += -GL -GF- Gy -GA
+
+# /GL /Os /GF /Gy /GA. In the linker you more or less want /OPT:REF and /OPT:ICF and /LTCG.
+    LIBS += -OPT:REF -OPT:ICF -LTCG -VERBOSE:UNUSEDLIBS
 
     LIBS += -L$$PWD/libs/libxm/src/Release -lxms
 
