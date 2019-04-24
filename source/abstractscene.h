@@ -19,6 +19,7 @@ public:
     GLuint m_targetFramebufferName = 0;
     GLuint m_renderedTexture;
     int m_width, m_height;
+    AbstractScene() {}
     AbstractScene(int timer, int w, int h);
     ~AbstractScene();
     vector<LGLObject*> m_objects;
@@ -35,7 +36,7 @@ public:
 
     virtual void Init();
     virtual void Update(LXM& xm);
-    virtual void Cleanup() {}
+    virtual void Cleanup();
 };
 
 #endif // ABSTRACTSCENE_H

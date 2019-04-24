@@ -17,7 +17,7 @@ DEFINES += GLM_ENABLE_EXPERIMENTAL
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-#linux-g*{
+linux-g*{
     QMAKE_CXXFLAGS += -fopenmp
     QMAKE_CXXFLAGS +=  -Wno-unused-variable -Wno-unused-parameter -Wno-sign-compare -Wno-comment -Wno-parentheses -Wno-delete-non-virtual-dtor -Wno-missing-noreturn
 #    LIBS += -fopenmp
@@ -31,10 +31,30 @@ DEFINES += GLM_ENABLE_EXPERIMENTAL
 
 #    LIBS += -lGL
 #    LIBS += -ldl
-
-
-#}
 INCLUDEPATH +=$$PWD/../libxm/include/
+
+
+}
+win32-msvc*{
+    QMAKE_CXXFLAGS += -openmp
+     LIBS += -fopenmp
+#    QMAKE_CXXFLAGS +=  -Ofast
+#    QMAKE_CXXFLAGS +=  -Os  -fno-stack-protector  -ffunction-sections -fdata-sections   -fno-unwind-tables -fno-asynchronous-unwind-tables -fno-math-errno  -fmerge-all-constants
+#    QMAKE_CXXFLAGS += -fno-ident  -fsingle-precision-constant  -ffast-math
+#    QMAKE_CXXFLAGS += -s -Wl,-verbose -Wl,-Bstatic
+    LIBS += -L$$PWD/libs/glew-2.1.0/ -L$$PWD/libs/glfw-3.3.bin.WIN64/ -lGLEW32 -lGLU32 -lopengl32 -lglfw3
+    LIBS += -lgdi32 -lshell32 -lvcruntime -lmsvcrt -lUser32
+
+    LIBS += -L$$PWD/libs/libxm/src/Release -lxms
+
+    INCLUDEPATH +=$$PWD/libs/glew-2.1.0/include/
+    INCLUDEPATH +=$$PWD/libs/glfw-3.3.bin.WIN64/include/
+    INCLUDEPATH +=$$PWD/libs/glm
+
+    INCLUDEPATH +=$$PWD/libs/libxm/include/
+    LIBS += -lwinmm
+
+}
 
 
 SOURCES += \
@@ -46,7 +66,7 @@ SOURCES += \
     source/scene1.cpp \
     source/abstractscene.cpp \
     source/uniform.cpp \
-    source/engine/lphysics.cpp
+    source/engine/lphysics.cpp \
  #   source/math/vmath.cpp
 
 # Default rules for deployment.
@@ -63,5 +83,5 @@ HEADERS += \
     source/Scene1.h \
     source/abstractscene.h \
     source/uniform.h \
-    source/engine/lphysics.h
+    source/engine/lphysics.h \
 

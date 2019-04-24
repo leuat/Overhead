@@ -96,3 +96,5 @@ void AbstractScene::Update(LXM& xm) {
     }
 
 }
+
+void AbstractScene::Cleanup() {}

@@ -15,7 +15,7 @@ void LPhysics::InitRandom(int N, vec3 spread, vec3 center)
 
 void LPhysics::Gravity2()
 {
-#pragma omp paralell for
+#pragma omp parallel for
     for (int i=0;i<m_objects.size()-1;i++)
         for (int j=i+1;j<m_objects.size();j++) {
             if (m_objects[i]!=m_objects[j])

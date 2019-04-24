@@ -41,6 +41,7 @@ void LXM::gen_waveforms() {
 void LXM::InitMusic() {
     unsigned int rate = 48000;
 
+  #ifdef __linux__
     snd_pcm_open(&device, "default", SND_PCM_STREAM_PLAYBACK, 0);
     snd_pcm_hw_params_malloc(&params);
     snd_pcm_hw_params_any(device, params);
@@ -49,19 +50,33 @@ void LXM::InitMusic() {
     snd_pcm_hw_params_set_channels(device, params, 2);
     snd_pcm_hw_params_set_rate_near(device, params, &rate, NULL);
     snd_pcm_hw_params(device, params);
-
+#endif
+#ifdef _WIN32
+//4     m_cwb = new CWaveOut(WAVE_FORMAT_PCM,1,4096);
+#endif
  //           xm_create_context_from_libxmize(&ctx, music, rate);
     xm_create_context(&ctx, music, rate);
     //        gen_waveforms();
 
+#ifdef __linux__
     snd_pcm_prepare(device);
+#endif
 
 }
 
 void LXM::Play()
 {
    xm_generate_samples(ctx, buffer, 2048);
+#ifdef __linux__
    snd_pcm_writei(device, buffer, 2048);
+#endif
+#ifdef _WIN32
+    HINSTANCE HInstance = GetModuleHandle(0);
+    char* buf;
+
+    PlaySoundA(buf, HInstance,  SND_MEMORY | SND_ASYNC);
+#endif
+
 }
 
 

@@ -16,10 +16,6 @@ void Scene1::Init()
     RegisterStandards(p1);
     float r= 10;
     m_physics.InitRandom(m_noSpheres,vec3(r,r,r),vec3(r/2,0,r/2));
-/*    for (int i=0;i<m_noSpheres;i++) {
-        m_sPos.push_back(0.3*vec3(rand()%r-r/2,rand()%r,rand()%r-r/2));
-    }
-*/
     m_uniforms.push_back(new Uniform(p1->m_programID,"spherePos",m_noSpheres*5));
 
 //   m_projMat = getProjectionMatrix();
@@ -74,3 +70,4 @@ void Scene1::Update(LXM& xm)
 
     m_time++;
 }
+

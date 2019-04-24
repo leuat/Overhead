@@ -7,10 +7,20 @@
 #include <xm.h>
   }
 //#endif
+#ifdef __linux__
 #include <alsa/asoundlib.h>
+#endif
 #include "../resources/music/music.h"
 
+#ifdef _WIN32
+//#include "source/cwavebuffer.h"
+#include <windows.h>
+#include <mmsystem.h>
+#include <iostream>
+#include <fstream>
+#include <conio.h>
 
+#endif
 
 
 class LXM
@@ -18,10 +28,14 @@ class LXM
 public:
     LXM();
     xm_context_t* ctx;
+#ifdef __linux__
     snd_pcm_t* device;
     snd_pcm_hw_params_t* params;
+#endif
+#ifdef _WIN32
+//    CWaveOut* m_cwb;
+#endif
     float buffer[4096];
-
     void gen_waveforms(void);
     void InitMusic();
     void Play();

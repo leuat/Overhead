@@ -40,8 +40,8 @@ public:
 
     LGLWrap(LXM* lxm);
 
-    virtual int Init(int w, int h);
-    virtual void Update() {}
+    int Init(int w, int h);
+    void Update() {}
 
     int Exec();
 };
