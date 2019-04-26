@@ -64,7 +64,7 @@ int LGLWrap::Exec()
     do{
         glClear( GL_COLOR_BUFFER_BIT );
 
-//        m_lxm->Play();
+        m_lxm->Play();
 
 
         if (m_currentScene!=nullptr) {

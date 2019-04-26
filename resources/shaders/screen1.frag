@@ -3,8 +3,11 @@
 // Ouput data
 out vec3 color;
 in vec2 UV;
-uniform sampler2D renderedTexture;
 
+uniform sampler2D renderedTexture;
+uniform sampler2D frontTexture;
+
+uniform vec3 textColor;
 
 #pragma parameter CURVATURE_X "Screen curvature - horizontal" 0.10 0.0 1.0 0.01
 #pragma parameter CURVATURE_Y "Screen curvature - vertical" 0.15 0.0 1.0 0.01
@@ -87,6 +90,19 @@ vec2 Distort(vec2 coord)
 }
 
 
+vec3 getTexture(in vec2 pr, in vec2 pg, in vec2 pb) {
+    vec3 color;
+    color.x = texture( renderedTexture, pr*0.5 + vec2(0.5,0.5) ).x;
+    color.y = texture( renderedTexture, pg*0.5 + vec2(0.5,0.5) ).y;
+    color.z = texture( renderedTexture, pb*0.5 + vec2(0.5,0.5) ).z;
+
+    color.x += texture( frontTexture, pr*0.5 + vec2(0.5,0.5) ).x*textColor.x;
+    color.y += texture( frontTexture, pg*0.5 + vec2(0.5,0.5) ).y*textColor.y;
+    color.z += texture( frontTexture, pb*0.5 + vec2(0.5,0.5) ).z*textColor.z;
+
+    return color;
+}
+
 void main()
 {
     float N = 320;
@@ -94,14 +110,17 @@ void main()
 
     vec2 PUV = floor(UV*N)/N;
 
-    vec2 pr = Distort(PUV)*0.88;
-    vec2 pg = Distort(PUV)*0.85;
-    vec2 pb = Distort(PUV)*0.82;
+    PUV = Distort(PUV);
 
-    color.x = texture( renderedTexture, pr*0.5 + vec2(0.5,0.5) ).x;
+    vec2 pr = PUV*0.88;
+    vec2 pg = PUV*0.85;
+    vec2 pb = PUV*0.82;
+
+    color = getTexture(pr,pg,pb);
+/*    color.x = texture( renderedTexture, pr*0.5 + vec2(0.5,0.5) ).x;
     color.y = texture( renderedTexture, pg*0.5 + vec2(0.5,0.5) ).y;
     color.z = texture( renderedTexture, pb*0.5 + vec2(0.5,0.5) ).z;
-
+*/
 
 
     float amp = 1;
@@ -114,7 +133,9 @@ void main()
     if (pg.x>1 || pg.x<-1 || pg.y>1 || pg.y<-1) { color.g = 0;}
     if (pb.x>1 || pb.x<-1 || pb.y>1 || pb.y<-1) { color.b = 0;}
 
-    color *= vec3(1,0.8,0.1);
+//
+//    color = color + texture( frontTexture, UV*0.5 + vec2(0.5,0.5) ).xyz *textColor;
+//    color.w = 1;
 
 //    color  = pow(color,8);
 

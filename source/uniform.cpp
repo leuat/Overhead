@@ -3,6 +3,7 @@
 
 void Uniform::SetUniform() {
     if (m_type==tVec3) glUniform3f(m_id,m_vec3.x,m_vec3.y,m_vec3.z);
+
             if (m_type==tScalar) {
             if (m_arrSize==1)
             glUniform1f(m_id, m_fval);

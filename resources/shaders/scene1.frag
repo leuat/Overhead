@@ -12,9 +12,9 @@ vec2 map( in vec3 pos )
         // res = opU( res, vec2( sdSphere(    pos-vec3( spherePos[5*i+0],spherePos[5*i+1], spherePos[5*i+2]), spherePos[5*i+4] ), spherePos[5*i+3]*200.0 + time ) );
 //         res = opU( res, vec2( sdSphere(    pos-vec3( spherePos[5*i+0],spherePos[5*i+1], spherePos[5*i+2]), 0.5),  spherePos[5*i+3]  ));
          vec3 p = pos-vec3(
-                 spherePos[5*i+0]*0.1,
+                 spherePos[5*i+0]*0.01,
                  spherePos[5*i+1]*0.0+0.2,
-                 spherePos[5*i+2])*0.1;
+                 spherePos[5*i+2])*0.01;
          float c= cos(time/25.0)+2;
 //         c = 1.1;
          p = modfunc(p,vec3(c,4,c));

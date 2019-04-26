@@ -24,11 +24,14 @@ public:
     GLuint m_uvBuffer;
     vector<GLfloat> m_data;
     vector<GLfloat> m_uv;
-
+    bool m_isInitialized = false;
 public:
     LGLObject();
     ~LGLObject()  { Destroy();}
-    void Init(string vert, string frag,vector<string> frag_includes );
+    void UseProgram();
+
+
+    void Init(const char* vert, const char* frag,vector<const char*> frag_includes );
     void GenerateGenericPlane();
     void EnableArray(int i, GLuint buf, int attr, int size);
     GLuint CreateBuffer(vector<GLfloat>& data);

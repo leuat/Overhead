@@ -7,6 +7,11 @@ using namespace std;
 #include <source/engine/lglobject.h>
 #include <source/uniform.h>
 #include <source/lxm.h>
+#include "resources/shaders/screen1_frag.h"
+#include "resources/shaders/screen1_vert.h"
+
+
+
 
 class AbstractScene
 {
@@ -27,13 +32,16 @@ public:
     vector<LGLObject*> m_objects;
     vector<Uniform*> m_uniforms;
 
+    void SetForegroundColor(vec3 col);
+
     LGLObject* m_targetObject;
 
-
+    GLuint m_frontTextureID = -1;
     int m_timerEnd;
-
+    int m_foregroundID = -1;
     void RegisterStandards(LGLObject* p1);
 
+    void InitFrameBufferOnly();
     void SetupFrameBuffer();
 
     virtual void InitScene();

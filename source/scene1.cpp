@@ -8,20 +8,36 @@ void Scene1::InitScene()
 
    LGLObject* p1 = new LGLObject();
    p1->GenerateGenericPlane();
-   vector<string> includes;
-   includes.push_back("../resources/shaders/raymarcherinc.frag");
-   p1->Init("../resources/shaders/scene1.vert","../resources/shaders/scene1.frag", includes);
+   vector<const char*> includes;
+   includes.push_back(raymarcherinc);
+//   p1->Init("../resources/shaders/scene1.vert","../resources/shaders/scene1.frag", includes);
+   p1->Init(scene1_vert,scene1_frag, includes);
+
    m_objects.push_back(p1);
 
+//   printf("WOOOT\n");
+  // printf("SIZE : %d\n", sizeof(arcadeclassic));
+    m_fr.Init(allerta, sizeof(allerta),64, m_width, m_height);
+
+    m_fr.InitFrameBufferOnly();
+    m_fr.RenderText("PROXIMA",0.1,0.4,0.003f,0.006f,vec3(1,1,1));
+
+    m_frontTextureID =  m_fr.m_renderedTexture;
+
+
+//    m_frontTextureID =  m_fr.m_characters[5].TextureID;//   m_fr.m_renderedTexture;
+//    m_frontTextureID =  m_fr.m_renderedTexture;
 
     RegisterStandards(p1);
     float r= 10;
     m_physics.InitRandom(m_noSpheres,vec3(r,r,r),vec3(r/2,0,r/2));
     m_uniforms.push_back(new Uniform(p1->m_programID,"spherePos",m_noSpheres*5));
 
+
+
    //m_projMat = getProjectionMatrix();
   // m_viewMat = getViewMatrix();
-
+    SetupFrameBuffer();
 }
 
 void Scene1::UpdateScene(LXM& xm)
@@ -30,8 +46,6 @@ void Scene1::UpdateScene(LXM& xm)
 
     m_uniforms[0]->m_vec3 = m_camera;
     m_uniforms[1]->m_vec3 = m_target;
-
-
 
     float r = 6;
     float t = m_time/60.0 ;
@@ -67,6 +81,10 @@ void Scene1::UpdateScene(LXM& xm)
 
     m_physics.Move(0.01);
             m_physics.ToArray(m_uniforms[4]->m_arr);
+
+    float var1 = sin(m_time*2.34);
+    float var2 = sin(m_time*1.23);
+    SetForegroundColor(glm::vec3(1,1,1)*(rand()%100/100.0f));
 
 
     m_time++;

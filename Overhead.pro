@@ -17,7 +17,10 @@ DEFINES += GLM_ENABLE_EXPERIMENTAL
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-linux-g*{
+
+#system($$PWD/resources/compile.sh):HAS_BIN=FALSE
+
+linux*{
     QMAKE_CXXFLAGS += -fopenmp
     QMAKE_CXXFLAGS +=  -Wno-unused-variable -Wno-unused-parameter -Wno-sign-compare -Wno-comment -Wno-parentheses -Wno-delete-non-virtual-dtor -Wno-missing-noreturn
 #    LIBS += -fopenmp
@@ -28,11 +31,12 @@ linux-g*{
     LIBS += -lGLEW -lGLU -lGL -lglfw
 
     LIBS += -L$$PWD/../libxm/build-prod/src -lxms  -lasound -ljack
+    LIBS += -lfreetype
 
 #    LIBS += -lGL
 #    LIBS += -ldl
-INCLUDEPATH +=$$PWD/../libxm/include/
-
+    INCLUDEPATH +=$$PWD/../libxm/include/
+    INCLUDEPATH += /usr/include/freetype2
 
 }
 win32-msvc*{
@@ -53,6 +57,7 @@ win32-msvc*{
     LIBS += -OPT:REF -OPT:ICF -LTCG -VERBOSE:UNUSEDLIBS
 
     LIBS += -L$$PWD/libs/libxm/src/Release -lxms
+
 
     INCLUDEPATH +=$$PWD/libs/glew-2.1.0/include/
     INCLUDEPATH +=$$PWD/libs/glfw-3.3.bin.WIN64/include/
@@ -75,6 +80,7 @@ SOURCES += \
     source/uniform.cpp \
     source/engine/lphysics.cpp \
  #   source/math/vmath.cpp
+    source/engine/lfontrenderer.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -91,4 +97,5 @@ HEADERS += \
     source/abstractscene.h \
     source/uniform.h \
     source/engine/lphysics.h \
+    source/engine/lfontrenderer.h
 

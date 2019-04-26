@@ -15,6 +15,6 @@ int main( void )
     int w = 800;
     int h= 600;
      app.m_scenes.push_back(new Scene1(2000,w,h));
-    app.Init(1024,768);
+    app.Init(w,h);
     return app.Exec();
 }

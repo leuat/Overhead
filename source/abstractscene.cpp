@@ -16,6 +16,11 @@ AbstractScene::~AbstractScene() {
 
 }
 
+void AbstractScene::SetForegroundColor(vec3 col)
+{
+    m_uniforms[m_foregroundID]->m_vec3 = col;
+}
+
 void AbstractScene::RegisterStandards(LGLObject* p1)
 {
 //    printf("%d\n",p1->m_programID);
@@ -29,7 +34,7 @@ void AbstractScene::RegisterStandards(LGLObject* p1)
 
 }
 
-void AbstractScene::SetupFrameBuffer()
+void AbstractScene::InitFrameBufferOnly()
 {
     glGenFramebuffers(1, &m_targetFramebufferName);
     glBindFramebuffer(GL_FRAMEBUFFER, m_targetFramebufferName);
@@ -62,10 +67,20 @@ void AbstractScene::SetupFrameBuffer()
     m_useFrameBuffer = true;
 
 
+}
+
+void AbstractScene::SetupFrameBuffer()
+{
+    InitFrameBufferOnly();
+
     m_targetObject = new LGLObject();
     m_targetObject->GenerateGenericPlane();
-    vector<string>  inc;
-    m_targetObject->Init("../resources/shaders/screen1.vert","../resources/shaders/screen1.frag", inc);
+    vector<const char*>  inc;
+//    m_targetObject->Init("../resources/shaders/screen1.vert","../resources/shaders/screen1.frag", inc);
+    m_targetObject->Init(screen1_vert,screen1_frag, inc);
+
+    m_uniforms.push_back(new Uniform(m_targetObject->m_programID,"textColor",Uniform::tVec3));
+    m_foregroundID = m_uniforms.size()-1;
 
 }
 
@@ -74,7 +89,6 @@ void AbstractScene::SetupFrameBuffer()
 
 void AbstractScene::InitScene()
 {
-    SetupFrameBuffer();
 
 }
 
@@ -90,9 +104,19 @@ void AbstractScene::UpdateScene(LXM& xm) {
         u->SetUniform();
 
     if (m_useFrameBuffer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        m_targetObject->UseProgram();
+        m_uniforms[m_foregroundID]->SetUniform();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, m_renderedTexture);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, m_frontTextureID);
 
+        glUniform1i( glGetUniformLocation(m_targetObject->m_programID, "renderedTexture"), 0);
+        glUniform1i( glGetUniformLocation(m_targetObject->m_programID, "frontTexture"), 1);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
         m_targetObject->Render();
+
     }
 
 }
