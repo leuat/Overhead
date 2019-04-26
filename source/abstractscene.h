@@ -9,6 +9,7 @@ using namespace std;
 #include <source/lxm.h>
 #include "resources/shaders/screen1_frag.h"
 #include "resources/shaders/screen1_vert.h"
+#include <map>
 
 
 
@@ -24,21 +25,23 @@ public:
     float m_time = 0;
     bool m_useFrameBuffer = false;
     GLuint m_targetFramebufferName = 0;
+//    GLuint m_renderedTexture;
     GLuint m_renderedTexture;
     int m_width, m_height;
     AbstractScene() {}
     AbstractScene(int timer, int w, int h);
     ~AbstractScene();
     vector<LGLObject*> m_objects;
-    vector<Uniform*> m_uniforms;
 
     void SetForegroundColor(vec3 col);
+    void SetScreenColor(vec3 col);
 
     LGLObject* m_targetObject;
 
     GLuint m_frontTextureID = -1;
     int m_timerEnd;
-    int m_foregroundID = -1;
+    int m_foregroundColorID = -1;
+    int m_screenColorID = -1;
     void RegisterStandards(LGLObject* p1);
 
     void InitFrameBufferOnly();

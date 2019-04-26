@@ -10,6 +10,9 @@
 #include <string>
 #include <vector>
 #include <source/shader/shader.h>
+#include "source/uniform.h"
+#include <map>
+//#include "source/engine/lgltexture.h"
 
 using namespace glm;
 using namespace std;
@@ -25,6 +28,9 @@ public:
     vector<GLfloat> m_data;
     vector<GLfloat> m_uv;
     bool m_isInitialized = false;
+    map<string, Uniform*> m_uniforms;
+//    vector<LGLTexture*> m_textures;
+
 public:
     LGLObject();
     ~LGLObject()  { Destroy();}

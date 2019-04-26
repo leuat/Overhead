@@ -79,6 +79,7 @@ void Scene1::UpdateScene(LXM& xm)
     SetScreenColor(glm::vec3(1,1,1));
 
     m_targetObject->m_uniforms["chromatic"]->m_fval = 0.03;//0.03*sin(m_time/60.0);
+    
 //    m_targetObject->m_uniforms["chromatic"]->m_fval = 0.03;
     m_time++;
 }

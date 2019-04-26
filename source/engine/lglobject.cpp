@@ -76,7 +76,16 @@ GLuint LGLObject::CreateBuffer(vector<GLfloat> &data)
 
 void LGLObject::Render()
 {
+//    for (auto& v:m_textures)
+  //      v->Bind(m_programID);
+
     glUseProgram(m_programID);
+
+
+    for (auto& v: m_uniforms)
+        v.second->SetUniform();
+
+
     // 1rst attribute buffer : vertices
     EnableArray(0,m_vertexBuffer,0,3);
     EnableArray(1,m_uvBuffer,1,2);
@@ -95,5 +104,11 @@ void LGLObject::Destroy()
     glDeleteBuffers(1, &m_uvBuffer);
     glDeleteVertexArrays(1, &m_vertexArrayID);
     glDeleteProgram(m_programID);
+
+    for (auto& v: m_uniforms)
+        delete v.second;
+
+  ///  for (auto v: m_textures)
+    //    delete v;
 
 }

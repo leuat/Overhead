@@ -8,6 +8,8 @@ uniform sampler2D renderedTexture;
 uniform sampler2D frontTexture;
 
 uniform vec3 textColor;
+uniform vec3 screenColor;
+uniform float chromatic;
 
 #pragma parameter CURVATURE_X "Screen curvature - horizontal" 0.10 0.0 1.0 0.01
 #pragma parameter CURVATURE_Y "Screen curvature - vertical" 0.15 0.0 1.0 0.01
@@ -92,9 +94,9 @@ vec2 Distort(vec2 coord)
 
 vec3 getTexture(in vec2 pr, in vec2 pg, in vec2 pb) {
     vec3 color;
-    color.x = texture( renderedTexture, pr*0.5 + vec2(0.5,0.5) ).x;
-    color.y = texture( renderedTexture, pg*0.5 + vec2(0.5,0.5) ).y;
-    color.z = texture( renderedTexture, pb*0.5 + vec2(0.5,0.5) ).z;
+    color.x = texture( renderedTexture, pr*0.5 + vec2(0.5,0.5) ).x*screenColor.x;
+    color.y = texture( renderedTexture, pg*0.5 + vec2(0.5,0.5) ).y*screenColor.y;
+    color.z = texture( renderedTexture, pb*0.5 + vec2(0.5,0.5) ).z*screenColor.z;
 
     color.x += texture( frontTexture, pr*0.5 + vec2(0.5,0.5) ).x*textColor.x;
     color.y += texture( frontTexture, pg*0.5 + vec2(0.5,0.5) ).y*textColor.y;
@@ -112,9 +114,9 @@ void main()
 
     PUV = Distort(PUV);
 
-    vec2 pr = PUV*0.88;
-    vec2 pg = PUV*0.85;
-    vec2 pb = PUV*0.82;
+    vec2 pr = PUV*(0.85+chromatic);
+    vec2 pg = PUV*(0.85);
+    vec2 pb = PUV*(0.85-chromatic);
 
     color = getTexture(pr,pg,pb);
 /*    color.x = texture( renderedTexture, pr*0.5 + vec2(0.5,0.5) ).x;

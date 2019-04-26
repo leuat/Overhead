@@ -80,7 +80,8 @@ SOURCES += \
     source/uniform.cpp \
     source/engine/lphysics.cpp \
  #   source/math/vmath.cpp
-    source/engine/lfontrenderer.cpp
+    source/engine/lfontrenderer.cpp \
+ #   source/engine/lgltexture.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -97,5 +98,6 @@ HEADERS += \
     source/abstractscene.h \
     source/uniform.h \
     source/engine/lphysics.h \
-    source/engine/lfontrenderer.h
+    source/engine/lfontrenderer.h \
+#    source/engine/lgltexture.h
 

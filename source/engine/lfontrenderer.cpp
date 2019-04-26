@@ -18,6 +18,8 @@ void LFontRenderer::Init(char* data, int len, int size, int w, int h)
     SetSize(size);
 
     GenerateCharset();
+    InitFrameBufferOnly();
+
 }
 
 void LFontRenderer::GenerateCharset()

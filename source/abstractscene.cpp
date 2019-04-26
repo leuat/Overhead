@@ -10,27 +10,28 @@ AbstractScene::AbstractScene(int timer, int w, int h)
 AbstractScene::~AbstractScene() {
     for (auto v: m_objects)
         delete v;
-
-    for (auto v: m_uniforms)
-        delete v;
-
 }
 
 void AbstractScene::SetForegroundColor(vec3 col)
 {
-    m_uniforms[m_foregroundID]->m_vec3 = col;
+    m_targetObject->m_uniforms["textColor"]->m_vec3 = col;
 }
+
+void AbstractScene::SetScreenColor(vec3 col)
+{
+
+    m_targetObject->m_uniforms["screenColor"]->m_vec3 = col;
+}
+
 
 void AbstractScene::RegisterStandards(LGLObject* p1)
 {
-//    printf("%d\n",p1->m_programID);
-    m_uniforms.push_back(new Uniform(p1->m_programID,"camera", Uniform::tVec3));
-    m_uniforms.push_back(new Uniform(p1->m_programID,"target", Uniform::tVec3));
 
-    m_uniforms.push_back(new Uniform(p1->m_programID,"invVP", Uniform::tMat4));
-    m_uniforms.push_back(new Uniform(p1->m_programID,"time", Uniform::tScalar));
-//    m_uniforms.push_back(new Uniform(p1->m_programID,"projMat", Uniform::tMat4));
-  //  m_uniforms.push_back(new Uniform(p1->m_programID,"viewMat", Uniform::tMat4));
+    m_objects[0]->m_uniforms["camera"] = new Uniform(p1->m_programID,"camera", Uniform::tVec3);
+    m_objects[0]->m_uniforms["target"] = new Uniform(p1->m_programID,"target", Uniform::tVec3);
+
+    m_objects[0]->m_uniforms["invVP"]= new Uniform(p1->m_programID,"invVP", Uniform::tMat4);
+    m_objects[0]->m_uniforms["time"]= new Uniform(p1->m_programID,"time", Uniform::tScalar);
 
 }
 
@@ -38,6 +39,9 @@ void AbstractScene::InitFrameBufferOnly()
 {
     glGenFramebuffers(1, &m_targetFramebufferName);
     glBindFramebuffer(GL_FRAMEBUFFER, m_targetFramebufferName);
+
+
+//    m_renderTexture.Init(m_width, m_height,0, "renderedTexture");
 
     glGenTextures(1, &m_renderedTexture);
 
@@ -79,9 +83,11 @@ void AbstractScene::SetupFrameBuffer()
 //    m_targetObject->Init("../resources/shaders/screen1.vert","../resources/shaders/screen1.frag", inc);
     m_targetObject->Init(screen1_vert,screen1_frag, inc);
 
-    m_uniforms.push_back(new Uniform(m_targetObject->m_programID,"textColor",Uniform::tVec3));
-    m_foregroundID = m_uniforms.size()-1;
+    m_targetObject->m_uniforms["textColor"]= new Uniform(m_targetObject->m_programID,"textColor",Uniform::tVec3);
+    m_targetObject->m_uniforms["screenColor"] = new Uniform(m_targetObject->m_programID,"screenColor",Uniform::tVec3);
+    m_targetObject->m_uniforms["chromatic"] = new Uniform(m_targetObject->m_programID,"chromatic",Uniform::tScalar);
 
+//    m_targetObject->m_textures.push_back(&m_renderedTexture);
 }
 
 
@@ -100,12 +106,9 @@ void AbstractScene::UpdateScene(LXM& xm) {
      for (auto v : m_objects)
         v->Render();
 
-    for (auto u: m_uniforms)
-        u->SetUniform();
-
     if (m_useFrameBuffer) {
         m_targetObject->UseProgram();
-        m_uniforms[m_foregroundID]->SetUniform();
+
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, m_renderedTexture);
         glActiveTexture(GL_TEXTURE1);
