@@ -71,6 +71,9 @@ void LXM::InitMusic() {
 void LXM::Play()
 {
    xm_generate_samples(ctx, buffer, 2048);
+
+//    ctx->generated_samples += numsamples;
+
 #ifdef __linux__
    snd_pcm_writei(device, buffer, 2048);
 #endif

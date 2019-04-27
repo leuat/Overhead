@@ -44,7 +44,6 @@ void AbstractScene::InitFrameBufferOnly()
 //    m_renderTexture.Init(m_width, m_height,0, "renderedTexture");
 
     glGenTextures(1, &m_renderedTexture);
-
     // "Bind" the newly created texture : all future texture functions will modify this texture
     glBindTexture(GL_TEXTURE_2D, m_renderedTexture);
 
@@ -87,6 +86,12 @@ void AbstractScene::SetupFrameBuffer()
     m_targetObject->m_uniforms["screenColor"] = new Uniform(m_targetObject->m_programID,"screenColor",Uniform::tVec3);
     m_targetObject->m_uniforms["chromatic"] = new Uniform(m_targetObject->m_programID,"chromatic",Uniform::tScalar);
 
+    m_targetObject->m_uniforms["lamp"] = new Uniform(m_targetObject->m_programID,"lamp",Uniform::tScalar);
+    m_targetObject->m_uniforms["lsca"] = new Uniform(m_targetObject->m_programID,"lsca",Uniform::tScalar);
+
+    m_targetObject->m_uniforms["lamp"]->m_fval = 0.5;
+    m_targetObject->m_uniforms["lsca"]->m_fval = 600;
+
 //    m_targetObject->m_textures.push_back(&m_renderedTexture);
 }
 
@@ -99,9 +104,13 @@ void AbstractScene::InitScene()
 }
 
 
-void AbstractScene::UpdateScene(LXM& xm) {
+void AbstractScene::UpdateScene(LXM& xm, float dt) {
+    m_time+=dt;
+//    m_useFrameBuffer = false;
     if (m_useFrameBuffer)
         glBindFramebuffer(GL_FRAMEBUFFER, m_targetFramebufferName);
+
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
      for (auto v : m_objects)
         v->Render();

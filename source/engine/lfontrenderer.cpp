@@ -43,6 +43,7 @@ void LFontRenderer::GenerateCharset()
 #endif
         // Generate texture
         GLuint texture;
+
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
         glTexImage2D(

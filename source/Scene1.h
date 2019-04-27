@@ -15,7 +15,7 @@ public:
     LFontRenderer m_fr;
     Scene1(int t, int w, int h) : AbstractScene(t,w,h) {}
     void InitScene() override;
-    void UpdateScene(LXM& xm) override;
+    void UpdateScene(LXM& xm, float dt) override;
     void CleanupScene() override {}
 };
 

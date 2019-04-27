@@ -1,5 +1,5 @@
 #include "lglwrap.h"
-
+#include <time.h>
 LGLWrap::LGLWrap(LXM* lxm)
 {
     m_lxm = lxm;
@@ -62,14 +62,28 @@ int LGLWrap::Exec()
     bool done = false;
     m_lxm->Play();
     m_timer = 0;
+    float prev = clock();
+    int tt;
+//    const clock_t begin_time = clock();
+
     do{
+
+        float k = clock();
+        m_lxm->Play();
+        float playt = (clock () - prev ) /  CLOCKS_PER_SEC;
+  //      printf("Time: %f\n",playt );
+
+        float dt = (clock () - prev ) /  CLOCKS_PER_SEC*1000.0;
+        if (dt<0.01) dt = 0.01f;
+        prev = clock();
+//        printf("%f\n",dt);
         glClear( GL_COLOR_BUFFER_BIT );
 
-        m_lxm->Play();
+//        printf("FPS: %f\n",(1.0/(dt/1000.0)) );
 
 
         if (m_currentScene!=nullptr) {
-        m_currentScene->UpdateScene(*m_lxm);
+        m_currentScene->UpdateScene(*m_lxm,dt);
 
         if (m_timer>m_currentScene->m_timerEnd) {
             m_curSceneIdx++;
@@ -85,8 +99,7 @@ int LGLWrap::Exec()
         }
         glfwSwapBuffers(m_window);
         glfwPollEvents();
-
-        m_timer++;
+        m_timer+=dt;
 
     } // Check if the ESC key was pressed or the window was closed
     while ( glfwGetKey(m_window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&

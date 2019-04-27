@@ -11,6 +11,9 @@ uniform vec3 textColor;
 uniform vec3 screenColor;
 uniform float chromatic;
 
+uniform float lamp;
+uniform float lsca;
+
 
 
 /*#define CURVATURE_X 0.30
@@ -69,11 +72,9 @@ void main()
 */
 
 
-    float amp = 1;
-    float s = 600;
-    col.r *=1*(1 + amp*sin(pr.y*s));
-    col.g *=1*(1 + amp*sin(pg.y*s));
-    col.b *=1*(1 + amp*sin(pb.y*s));
+    col.r *=1*(1 + lamp*sin(pr.y*lsca));
+    col.g *=1*(1 + lamp*sin(pg.y*lsca));
+    col.b *=1*(1 + lamp*sin(pb.y*lsca));
 
     if (pr.x>1 || pr.x<-1 || pr.y>1 || pr.y<-1) { col.r = 0;}
     if (pg.x>1 || pg.x<-1 || pg.y>1 || pg.y<-1) { col.g = 0;}

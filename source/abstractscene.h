@@ -46,7 +46,7 @@ public:
     void SetupFrameBuffer();
 
     virtual void InitScene();
-    virtual void UpdateScene(LXM& xm);
+    virtual void UpdateScene(LXM& xm, float dt);
     virtual void CleanupScene();
 };
 

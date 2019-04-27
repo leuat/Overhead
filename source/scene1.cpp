@@ -33,9 +33,9 @@ void Scene1::InitScene()
     SetupFrameBuffer();
 }
 
-void Scene1::UpdateScene(LXM& xm)
+void Scene1::UpdateScene(LXM& xm, float dt)
 {
-    AbstractScene::UpdateScene(xm);
+    AbstractScene::UpdateScene(xm, dt);
 
     m_objects[0]->m_uniforms["camera"]->m_vec3 = m_camera;
     m_objects[0]->m_uniforms["target"]->m_vec3 = m_target;
@@ -59,7 +59,7 @@ void Scene1::UpdateScene(LXM& xm)
         v->c1 = beat*10.0;
     }
 
-    m_objects[0]->m_uniforms["invVP"]->m_mat4 = glm::inverse(m_projMat*m_viewMat);
+//    m_objects[0]->m_uniforms["invVP"]->m_mat4 = glm::inverse(m_projMat*m_viewMat);
     m_objects[0]->m_uniforms["time"]->m_fval = m_time;
 //    printf("%f\n",m_projMat[j][i]);
 
@@ -81,6 +81,5 @@ void Scene1::UpdateScene(LXM& xm)
 
     m_targetObject->m_uniforms["chromatic"]->m_fval = 0.03;//0.03*sin(m_time/60.0);
 //    m_targetObject->m_uniforms["chromatic"]->m_fval = 0.03;
-    m_time++;
 }
 

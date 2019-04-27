@@ -32,7 +32,7 @@ class LGLWrap
 protected:
     GLFWwindow* m_window;
     LXM* m_lxm;
-    int m_timer;
+    float m_timer;
 
     AbstractScene* m_currentScene = nullptr;
 
