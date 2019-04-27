@@ -7,8 +7,6 @@ using namespace std;
 #include <source/engine/lglobject.h>
 #include <source/uniform.h>
 #include <source/lxm.h>
-#include "resources/shaders/screen1_frag.h"
-#include "resources/shaders/screen1_vert.h"
 #include <map>
 
 

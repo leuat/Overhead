@@ -36,12 +36,13 @@ int LGLWrap::Init(int w, int h)
     // Initialize GLEW
     glewExperimental = true; // Needed for core profile
     if (glewInit() != GLEW_OK) {
-//        fprintf(stderr, "Failed to initialize GLEW\n");
-  //      getchar();
+#ifdef IS_DEBUG
+        fprintf(stderr, "Failed to initialize GLEW\n");
+        getchar();
+#endif
         glfwTerminate();
         return -1;
     }
-
     // Ensure we can capture the escape key being pressed below
     glfwSetInputMode(m_window, GLFW_STICKY_KEYS, GL_TRUE);
 

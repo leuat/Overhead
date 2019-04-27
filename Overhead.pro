@@ -1,6 +1,6 @@
 QT -= gui
 
-CONFIG += c++11 console
+CONFIG += c++03 window
 CONFIG -= app_bundle
 
 
@@ -21,10 +21,11 @@ DEFINES += GLM_ENABLE_EXPERIMENTAL
 #system($$PWD/resources/compile.sh):HAS_BIN=FALSE
 
 linux*{
-    QMAKE_CXXFLAGS += -fopenmp
+#    QMAKE_CXXFLAGS += -fopenmp
     QMAKE_CXXFLAGS +=  -Wno-unused-variable -Wno-unused-parameter -Wno-sign-compare -Wno-comment -Wno-parentheses -Wno-delete-non-virtual-dtor -Wno-missing-noreturn
 #    LIBS += -fopenmp
 #    QMAKE_CXXFLAGS +=  -Ofast
+    QMAKE_CXXFLAGS += -fno-exceptions
     QMAKE_CXXFLAGS +=  -Os  -fno-stack-protector  -ffunction-sections -fdata-sections -Wl,--gc-sections  -fno-unwind-tables -fno-asynchronous-unwind-tables -fno-math-errno  -fmerge-all-constants
     QMAKE_CXXFLAGS += -fno-ident  -fsingle-precision-constant  -ffast-math  -Wl,-z,norelro  -Wl,--hash-style=gnu
 #    QMAKE_CXXFLAGS += -s -Wl,-verbose -Wl,-Bstatic
@@ -71,6 +72,7 @@ win32-msvc*{
 
 SOURCES += \
         main.cpp \
+    source/Scenes/sceneplanet.cpp \
     source/shader/shader.cpp \
     source/lglwrap.cpp \
     source/lxm.cpp \
@@ -90,6 +92,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
 #    source/math/vmath.h
+    source/Scenes/sceneplanet.h \
     source/shader/shader.h \
     source/lglwrap.h \
     source/lxm.h \

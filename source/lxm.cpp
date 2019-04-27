@@ -1,5 +1,9 @@
 #include "lxm.h"
 
+namespace LMusic {
+    #include "../resources/music/music.h"
+}
+
 LXM::LXM()
 {
 
@@ -11,31 +15,31 @@ void LXM::gen_waveforms() {
     size_t len;
     uint8_t bits;
 
-    /* Square, large duty, half volume */
-    buf = (int8_t*)xm_get_sample_waveform(ctx, 1, 0, &len, &bits);
-    for(i = 0x40; i < len; ++i) buf[i] = 127;
+    // Square, large duty, half volume
+    buf = (int8_t*)xm_get_sample_waveform(ctx, 5, 0, &len, &bits);
+//    for(i = 0x40; i < len; ++i) buf[i] = 127;
+    for(i = 0x40; i < len; ++i) buf[i] = (256 *sin(i/100.0));
 
-    /* Ramp */
+/*
+ * // Ramp
     buf = (int8_t*)xm_get_sample_waveform(ctx, 2, 0, &len, &bits);
     for(i = 0; i < len; ++i) buf[i] = (256 *sin(i/10.0)) / len - 128;
 
-    /* Square, small duty */
+    // Square, small duty
     buf = (int8_t*)xm_get_sample_waveform(ctx, 4, 0, &len, &bits);
     for(i = 0; i < 0x80; ++i) buf[i] = -128;
     for(; i < 0xB0; ++i) buf[i] = 127;
     for(; i < len; ++i) buf[i] = -128;
 
-    /* XXX: Kick */
-    /* XXX: Pad */
-    /* XXX: Drum */
 
-    /* Noise */
+    // Noise
     buf = (int8_t*)xm_get_sample_waveform(ctx, 8, 0, &len, &bits);
     unsigned int next = 1;
     for(i = 0; i < len; ++i) {
-        next = next * 8127 + 1; /* A very simple linear congruence generator, see rand(3) */
+        next = next * 8127 + 1; // A very simple linear congruence generator, see rand(3)
         buf[i] = next >> 16 & 0xFF;
     }
+    */
 }
 
 void LXM::InitMusic() {
@@ -55,8 +59,8 @@ void LXM::InitMusic() {
 //4     m_cwb = new CWaveOut(WAVE_FORMAT_PCM,1,4096);
 #endif
  //           xm_create_context_from_libxmize(&ctx, music, rate);
-    xm_create_context(&ctx, music, rate);
-    //        gen_waveforms();
+    xm_create_context(&ctx, LMusic::music, rate);
+//            gen_waveforms();
 
 #ifdef __linux__
     snd_pcm_prepare(device);

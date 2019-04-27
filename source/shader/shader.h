@@ -7,8 +7,20 @@
 #include <GL/glew.h>
 
 
+namespace LShaders
+{
+    extern char scenePlanet_frag[];
+    extern char scenePlanet_vert[];
+    extern char scene1_vert[];
+    extern char scene1_frag[];
+    extern char screen1_vert[];
+    extern char screen1_frag[];
+    extern char glyph_vert[];
+    extern char glyph_frag[];
 
+    extern char raymarcherinc[];
 
+};
 
 
 using namespace std;

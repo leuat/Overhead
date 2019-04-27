@@ -10,7 +10,10 @@
 #ifdef __linux__
 #include <alsa/asoundlib.h>
 #endif
-#include "../resources/music/music.h"
+
+namespace LMusic {
+    extern char music[];
+}
 
 #ifdef _WIN32
 //#include "source/cwavebuffer.h"

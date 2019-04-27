@@ -9,12 +9,13 @@ void Scene1::InitScene()
    LGLObject* p1 = new LGLObject();
    p1->GenerateGenericPlane();
    vector<const char*> includes;
-   includes.push_back(raymarcherinc);
-   p1->Init(scene1_vert,scene1_frag, includes);
+   includes.push_back(LShaders::raymarcherinc);
+   p1->Init(LShaders::scene1_vert,LShaders::scene1_frag, includes);
 
    m_objects.push_back(p1);
 
-    m_fr.Init(allerta, sizeof(allerta),64, m_width, m_height);
+//    m_fr.Init(LFont::allerta, sizeof(LFont::allerta),64, m_width, m_height);
+    m_fr.Init(LFont::allerta, LFont::fontSize,64, m_width, m_height);
     m_fr.RenderText("PROXIMA",0.1,0.4,0.003f,0.006f,vec3(1,1,1));
 
 //    m_frontTextureID =  m_fr.m_renderTexture.m_textureID;
@@ -42,10 +43,10 @@ void Scene1::UpdateScene(LXM& xm)
     float r = 6;
     float t = m_time/60.0 ;
     m_camera  = glm::vec3(cos(t)*r,0.5*(cos(t*0.3)*r + r*1.3),sin(t)*r);
-    m_target = vec3(0,3*(2+sin(1.3*t)),0);
+//    m_target = vec3(0,3*(2+sin(1.3*t))*100,0);
 
-    m_viewMat = glm::lookAt(m_camera, m_target, glm::vec3(0,1,0));
-    m_projMat = glm::perspective(60.0,1.0, 1.0,1000.0);
+//    m_viewMat = glm::lookAt(m_camera, m_target, glm::vec3(0,1,0));
+  //  m_projMat = glm::perspective(60.0,1.0, 1.0,1000.0);
 
 
     float c = m_time/10.0 ;

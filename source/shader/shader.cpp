@@ -14,6 +14,17 @@ using namespace std;
 #include <GL/glew.h>
 
 #include "source/shader/shader.h"
+namespace LShaders {
+#include "resources/shaders/out/scenePlanet_frag.h"
+#include "resources/shaders/out/scenePlanet_vert.h"
+#include "resources/shaders/out/raymarcherinc_frag.h"
+#include "resources/shaders/out/scene1_frag.h"
+#include "resources/shaders/out/scene1_vert.h"
+#include "resources/shaders/out/screen1_frag.h"
+#include "resources/shaders/out/screen1_vert.h"
+#include "resources/shaders/out/glyph_frag.h"
+#include "resources/shaders/out/glyph_vert.h"
+}
 
 //GLuint LoadShaders(vector<string> includes, const char * vertex_file_path,const char * fragment_file_path){
     GLuint LoadShaders(vector<const char*> includes, const char * vertex_file_path,const char * fragment_file_path){
@@ -65,15 +76,18 @@ using namespace std;
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
 	glCompileShader(VertexShaderID);
 
-	// Check Vertex Shader
+#ifdef IS_DEBUG
+    // Check Vertex Shader
 	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if ( InfoLogLength > 0 ){
 		std::vector<char> VertexShaderErrorMessage(InfoLogLength+1);
 		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+        printf("Error compiling vertex shader : %s\n", vertex_file_path);
+
 		printf("%s\n", &VertexShaderErrorMessage[0]);
 	}
-
+#endif
 
 
 	// Compile Fragment Shader
@@ -85,26 +99,30 @@ using namespace std;
 	glCompileShader(FragmentShaderID);
 
 	// Check Fragment Shader
+#ifdef IS_DEBUG
+
 	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if ( InfoLogLength > 0 ){
 		std::vector<char> FragmentShaderErrorMessage(InfoLogLength+1);
 		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-		printf("%s\n", &FragmentShaderErrorMessage[0]);
+        printf("Error compiling fragment shader : %s\n", fragment_file_path);
+        printf("%s\n", &FragmentShaderErrorMessage[0]);
 	}
 
-
+#endif
 
 	// Link the program
 #ifdef IS_DEBUG
-    printf("Linking program\n");
+//    printf("Linking program\n");
 #endif
     GLuint ProgramID = glCreateProgram();
 	glAttachShader(ProgramID, VertexShaderID);
 	glAttachShader(ProgramID, FragmentShaderID);
 	glLinkProgram(ProgramID);
 
-	// Check the program
+#ifdef IS_DEBUG
+    // Check the program
 	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
 	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if ( InfoLogLength > 0 ){
@@ -113,7 +131,7 @@ using namespace std;
 		printf("%s\n", &ProgramErrorMessage[0]);
 	}
 
-	
+#endif
 	glDetachShader(ProgramID, VertexShaderID);
 	glDetachShader(ProgramID, FragmentShaderID);
 	

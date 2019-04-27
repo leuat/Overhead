@@ -15,16 +15,16 @@
 #include <ft2build.h>
 #include <string>
 #include <map>
-#include "resources/shaders/glyph_frag.h"
-#include "resources/shaders/glyph_vert.h"
 
 
 #include <source/abstractscene.h>
 
 #include FT_FREETYPE_H
 
-
-#include "resources/fonts/allerta.h"
+namespace LFont {
+    extern char allerta[];
+    extern int fontSize;
+}
 
 
 using namespace glm;
@@ -43,6 +43,7 @@ class LFontRenderer : public AbstractScene
 {
 public:
     LFontRenderer();
+
     void Init(char* data, int len, int size, int w, int h);
     void GenerateCharset();
     FT_Library m_ft;

@@ -1,4 +1,8 @@
 #include "lfontrenderer.h"
+namespace LFont {
+    #include "resources/fonts/allerta.h"
+    int fontSize = 10064;
+}
 
 LFontRenderer::LFontRenderer()
 {
@@ -30,8 +34,8 @@ void LFontRenderer::GenerateCharset()
     for (GLubyte c = 0; c < 128; c++)
     {
         // Load character glyph
-        if (FT_Load_Char(m_face, c, FT_LOAD_RENDER))
 #ifdef IS_DEBUG
+        if (FT_Load_Char(m_face, c, FT_LOAD_RENDER))
         {
             printf("ERROR::FREETYTPE: Failed to load Glyph\n");;
             continue;
@@ -85,7 +89,7 @@ void LFontRenderer::GenerateCharset()
     m_lglo = new LGLObject();
     m_lglo->GenerateGenericPlane();
 //    m_lglo->Init("../resources/shaders/glyph.vert","../resources/shaders/glyph.frag", vector<string>() );
-    m_lglo->Init(glyph_vert,glyph_frag, vector<const char*>() );
+    m_lglo->Init(LShaders::glyph_vert,LShaders::glyph_frag, vector<const char*>() );
 //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 }

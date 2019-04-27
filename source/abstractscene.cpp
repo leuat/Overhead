@@ -81,7 +81,7 @@ void AbstractScene::SetupFrameBuffer()
     m_targetObject->GenerateGenericPlane();
     vector<const char*>  inc;
 //    m_targetObject->Init("../resources/shaders/screen1.vert","../resources/shaders/screen1.frag", inc);
-    m_targetObject->Init(screen1_vert,screen1_frag, inc);
+    m_targetObject->Init(LShaders::screen1_vert,LShaders::screen1_frag, inc);
 
     m_targetObject->m_uniforms["textColor"]= new Uniform(m_targetObject->m_programID,"textColor",Uniform::tVec3);
     m_targetObject->m_uniforms["screenColor"] = new Uniform(m_targetObject->m_programID,"screenColor",Uniform::tVec3);

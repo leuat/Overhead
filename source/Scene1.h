@@ -1,8 +1,5 @@
 #ifndef SCENE1_H
 #define SCENE1_H
-#include "resources/shaders/scene1_frag.h"
-#include "resources/shaders/scene1_vert.h"
-#include "resources/shaders/raymarcherinc_frag.h"
 
 #include "source/abstractscene.h"
 #include "source/engine/lphysics.h"

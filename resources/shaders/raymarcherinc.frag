@@ -63,7 +63,7 @@ float sdTorus( vec3 p, vec2 t )
     return length( vec2(length(p.xz)-t.x,p.y) )-t.y;
 }
 
-vec2 iBox( in vec3 ro, in vec3 rd, in vec3 rad )
+/*vec2 iBox( in vec3 ro, in vec3 rd, in vec3 rad )
 {
     vec3 m = 1.0/rd;
     vec3 n = m*ro;
@@ -73,6 +73,7 @@ vec2 iBox( in vec3 ro, in vec3 rd, in vec3 rad )
         return vec2( max( max( t1.x, t1.y ), t1.z ),
                      min( min( t2.x, t2.y ), t2.z ) );
 }
+*/
 vec2 opU( vec2 d1, vec2 d2 )
 {
         return (d1.x<d2.x) ? d1 : d2;
@@ -157,7 +158,7 @@ mat3 setCamera( in vec3 ro, in vec3 ta, float cr )
         vec3 cv =          ( cross(cu,cw) );
     return mat3( cu, cv, cw );
 }
-
+/*
 float checkersGradBox( in vec2 p )
 {
     // filter kernel
@@ -167,6 +168,6 @@ float checkersGradBox( in vec2 p )
     // xor pattern
     return 0.5 - 0.5*i.x*i.y;
 }
-
+*/
 
 
