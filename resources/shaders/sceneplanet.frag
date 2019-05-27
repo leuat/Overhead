@@ -1,3 +1,4 @@
+
 uniform float aamp1;
 
 float sumNoise1(in vec3 p) {
@@ -9,6 +10,9 @@ float sumNoise1(in vec3 p) {
     }
     return l;
 }
+
+
+
 
 
 float sdPlanet( in vec3 p, in float s )
@@ -24,9 +28,11 @@ vec2 map( in vec3 pos )
     vec2 res = vec2( 1e10, 0.0 );
 
          vec3 pp = pos-vec3(0.1,0,0);
-//         float c= cos(time/25.0)+2;
+         float c= cos(time/25.0)+2;
 
-             res = opU( res, vec2( sdPlanet(    pp, 6),(1.1+sin(time/74.5))*64f));
+//             res = opU( res, vec2( sdPlanet(    pp, 6),(1.1+sin(time/74.5))*64f));
+
+             res = opU( res, vec2( sdPlanet(    pp, 6),45));
 
     return res;
 }
@@ -37,6 +43,6 @@ void main(){
         mat3 ca = setCamera( camera, target, 0 );
         vec3 rd = ca * normalize( vec3(UV*vec2(2,1),2.0));
 
-        color=crc(rd,camera,1,1,1, 0, 1, 0.8);
-
+        color = crc(rd, camera, 1,1,1, 0, 1, 0.8);
 }
+    
